@@ -40,7 +40,7 @@ const BillInput = ({ onBillParsed }: BillInputProps) => {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8000/parse-bill', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/parse-bill`, {
         method: 'POST',
         body: formData,
       })
