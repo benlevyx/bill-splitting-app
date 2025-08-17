@@ -14,9 +14,24 @@ pillow_heif.register_heif_opener()
 
 app = FastAPI(title="Bill Splitting API")
 
+# Debug logging for environment variables
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+print(f"🔧 FRONTEND_URL environment variable: {frontend_url}")
+print(f"🔧 All environment variables: {list(os.environ.keys())}")
+
+# Allow multiple origins for flexibility
+allowed_origins = [
+    frontend_url,
+    "https://partyofn.netlify.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+]
+
+print(f"🔧 CORS allowed origins: {allowed_origins}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_URL", "http://localhost:5173")],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
